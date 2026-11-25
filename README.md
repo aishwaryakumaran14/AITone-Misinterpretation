@@ -1,145 +1,148 @@
-# AI Tone Misinterpretation in Text Communication
 
-## 📌 Project Overview
+# ToneGuard AI
+### AI-Powered Tone Analysis, Grammar Correction & Professional Communication
 
-AI Tone Misinterpretation in Text Communication is an AI-powered system designed to improve professional email communication.
+ToneGuard AI is an intelligent text communication assistant designed to identify potentially harsh or misunderstood language, correct basic grammatical errors, and rewrite messages in a polite and professional tone.
 
-The system analyzes email text for grammatical errors and potentially misinterpretable tones such as harsh, rude, casual, aggressive, or ambiguous language. It then provides explanations and suggests a more polite and professional version of the email.
+## Project Overview
 
-The proposed system aims to help users communicate more clearly and professionally in workplace environments.
+Written communication can sometimes create misunderstandings because the intended tone may not match how the reader interprets a message.
 
----
+ToneGuard AI helps users improve their written communication by analysing text, identifying potentially harsh expressions, correcting grammar, and suggesting professional alternatives.
 
-## ❗ Problem Statement
+## Key Features
 
-Emails are one of the primary forms of communication in professional environments. However, the tone of written communication can sometimes be misunderstood because text does not contain facial expressions, voice tone, or other contextual cues.
+- **Tone Analysis:** Identifies potentially harsh, neutral, friendly, or professional language.
+- **Grammar Correction:** Corrects selected grammatical errors and basic sentence issues.
+- **Professional Rewriting:** Rewrites messages into a more polite and professional style.
+- **AI Integration:** Uses the Google Gemini API when available.
+- **Fallback Processing:** Provides local rule-based processing when the AI service is unavailable.
+- **Interactive Dashboard:** Simple web interface for entering messages and viewing results.
 
-Harsh, rude, overly casual, or ambiguous wording may result in misunderstandings, conflicts, or reduced productivity.
+## Technologies Used
 
-Grammar mistakes can also reduce the professionalism and credibility of workplace communication.
+| Component | Technology |
+|---|---|
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Python, FastAPI |
+| AI Integration | Google Gemini API |
+| Data Validation | Pydantic |
+| API Testing | Swagger UI |
+| Environment Management | Python Virtual Environment |
 
-Existing grammar-checking tools mainly focus on grammatical errors, while sentiment or tone analysis tools generally identify emotional characteristics without providing complete professional rewrites.
+## System Architecture
 
-Therefore, there is a need for an integrated system that can analyze grammar and tone and suggest professional alternatives.
+1. User enters text through the web dashboard.
+2. The frontend sends a request to the FastAPI backend.
+3. The backend processes the input using the relevant feature.
+4. Gemini AI is attempted for tone analysis and professional rewriting.
+5. Local rule-based processing is used if Gemini is unavailable.
+6. The processed result is returned to the frontend and displayed to the user.
 
----
-
-## 🎯 Objectives
-
-- Detect grammatical errors in email text.
-- Correct grammar and language mistakes.
-- Identify potentially misinterpretable communication tones.
-- Classify the detected tone.
-- Explain why a particular sentence may be perceived negatively.
-- Generate polite and professional email rewrites.
-- Preserve the original meaning and intent while improving communication.
-- Provide the analysis through a user-friendly Android application.
-
----
-
-## 💡 Proposed Solution
-
-The proposed system combines Natural Language Processing (NLP), grammar checking, and transformer-based AI models.
-
-The user enters an email into the Android application. The email is sent to a Python backend through an API.
-
-The backend performs grammar analysis and tone detection. If problematic wording is detected, the system provides an explanation and generates a professional rewrite.
-
-### Basic Workflow
-
-User Email
-↓
-Text Preprocessing
-↓
-Grammar Detection & Correction
-↓
-Tone Detection
-↓
-Tone Explanation
-↓
-Professional Rewrite
-↓
-Result Display
-
----
-
-## ✨ Key Features
-
-### 1. Grammar Correction
-
-Detects and corrects common grammatical, spelling, punctuation, and sentence-structure errors.
-
-### 2. Tone Detection
-
-Identifies communication tones that may be inappropriate or easily misinterpreted in professional communication.
-
-Possible tone categories include:
-
-- Professional
-- Polite
-- Neutral
-- Casual
-- Harsh
-- Aggressive
-- Impatient
-
-### 3. Tone Explanation
-
-Provides an understandable explanation of why a particular sentence may sound harsh, rude, demanding, or ambiguous.
-
-### 4. Professional Rewriting
-
-Generates a more polite and professional version of the email while attempting to preserve its original meaning.
-
-### 5. Android Application
-
-Provides a mobile interface where users can enter an email and view the analysis and suggested rewrite.
-
-### 6. Analysis History
-
-Previous analysis results can be stored using a database for future reference.
-
----
-
-## 🏗️ System Architecture
+## Project Structure
 
 ```text
-                  USER
-                    |
-                    v
-          +-------------------+
-          |   Android App     |
-          |     (Kotlin)      |
-          +---------+---------+
-                    |
-                 REST API
-                    |
-                    v
-          +-------------------+
-          |  Python Backend   |
-          |     (FastAPI)     |
-          +---------+---------+
-                    |
-          +---------+---------+
-          |                   |
-          v                   v
- +----------------+   +------------------+
- | Grammar Module |   |  Tone Detection  |
- | LanguageTool   |   | Transformers/NLP |
- +-------+--------+   +---------+--------+
-          |                    |
-          +---------+----------+
-                    |
-                    v
-          +-------------------+
-          | Rewrite Module    |
-          | Professional Text |
-          +---------+---------+
-                    |
-                    v
-          +-------------------+
-          |   SQLite Database |
-          +-------------------+
-                    |
-                    v
-          Professional Result
+AITone-Misinterpretation/
+│
+├── android-app/
+│   └── index.html
+│
+├── backend/
+│   └── main.py
+│
+├── datasets/
+├── models/
+├── .gitignore
+└── README.md
+```
+
+## Installation and Execution
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/aishwaryakumaran14/AITone-Misinterpretation.git
+cd AITone-Misinterpretation
+```
+
+### 2. Create and Activate a Virtual Environment
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install fastapi uvicorn python-dotenv google-genai
+```
+
+### 4. Configure the Gemini API Key
+
+Create a `.env` file in the project root:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+Replace the placeholder with your own Gemini API key. Never upload your `.env` file to GitHub.
+
+### 5. Start the Backend
+
+```bash
+python -m uvicorn backend.main:app --reload --port 8000
+```
+
+Backend API:
+http://127.0.0.1:8000
+
+Swagger documentation:
+http://127.0.0.1:8000/docs
+
+### 6. Start the Frontend
+
+Open another terminal and run:
+
+```bash
+python3 -m http.server 5500
+```
+
+Open the dashboard:
+
+http://127.0.0.1:5500/android-app/
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | Backend status |
+| GET | `/health` | Health check |
+| POST | `/analyze` | Analyse message tone |
+| POST | `/grammar` | Correct grammar |
+| POST | `/rewrite` | Rewrite professionally |
+
+## Expected Applications
+
+- Professional email communication
+- Academic and workplace messaging
+- Improving clarity and politeness
+- Reducing misunderstandings in written communication
+
+## Future Enhancements
+
+- Advanced grammar correction using NLP.
+- Support for multiple languages.
+- Context-aware emotion and sentiment detection.
+- User authentication and communication history.
+- Downloadable analysis reports.
+
+## Project Information
+
+**Project Name:** ToneGuard AI  
+**Project Domain:** Artificial Intelligence and Natural Language Processing  
+**Repository:** [AITone-Misinterpretation](https://github.com/aishwaryakumaran14/AITone-Misinterpretation)
+
+---
+
+*Developed as an academic project to promote clear, respectful, and effective digital communication.*
