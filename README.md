@@ -1,148 +1,131 @@
+# ToneGuard AI – AI-Powered Tone Misinterpretation in Text Communication
 
-# ToneGuard AI
-### AI-Powered Tone Analysis, Grammar Correction & Professional Communication
+**Live Website:** https://aitone-misinterpretation.onrender.com  
+**GitHub Repository:** https://github.com/aishwaryakumaran14/AITone-Misinterpretation
 
-ToneGuard AI is an intelligent text communication assistant designed to identify potentially harsh or misunderstood language, correct basic grammatical errors, and rewrite messages in a polite and professional tone.
+## 1. Introduction
 
-## Project Overview
+ToneGuard AI is an AI-powered web application designed to improve digital communication by identifying emotional tone, correcting grammatical errors and transforming ordinary messages into professional and polite communication.
 
-Written communication can sometimes create misunderstandings because the intended tone may not match how the reader interprets a message.
+In today's digital world, most communication happens through text messages, emails, social media and professional platforms. However, written communication does not contain facial expressions, voice modulation or body language. Because of this, messages can sometimes be misunderstood.
 
-ToneGuard AI helps users improve their written communication by analysing text, identifying potentially harsh expressions, correcting grammar, and suggesting professional alternatives.
+ToneGuard helps users understand how their words may sound to others and provides suggestions to make their communication clearer, more respectful and professional.
 
-## Key Features
+## 2. Why Is This Project Important in Everyday Life?
 
-- **Tone Analysis:** Identifies potentially harsh, neutral, friendly, or professional language.
-- **Grammar Correction:** Corrects selected grammatical errors and basic sentence issues.
-- **Professional Rewriting:** Rewrites messages into a more polite and professional style.
-- **AI Integration:** Uses the Google Gemini API when available.
-- **Fallback Processing:** Provides local rule-based processing when the AI service is unavailable.
-- **Interactive Dashboard:** Simple web interface for entering messages and viewing results.
+Text communication has become an essential part of our daily lives. Students communicate with teachers, employees communicate with managers, businesses interact with customers, and people exchange messages through social media.
 
-## Technologies Used
+A message written in a hurry may unintentionally sound rude, aggressive or disrespectful.
 
-| Component | Technology |
+For example:
+
+- "Send me the report immediately."
+- "Why haven't you completed the work?"
+- "You never respond on time."
+
+The sender may not intend to be rude, but the receiver may interpret the message negatively.
+
+ToneGuard addresses this problem by identifying potentially harsh expressions and suggesting more appropriate communication.
+
+### Real-world applications
+
+- **Education:** Helps students communicate politely with teachers and classmates.
+- **Workplace communication:** Helps employees write professional emails and messages.
+- **Personal communication:** Reduces misunderstandings between friends and family.
+- **Customer service:** Helps create more respectful customer interactions.
+- **Online communication:** Encourages responsible and thoughtful messaging.
+
+The main purpose is not just to correct language, but to improve how people communicate and how their messages may be perceived.
+
+## 3. What Makes ToneGuard Different from Other AI Tools?
+
+General-purpose AI assistants can perform many tasks, including answering questions, generating content and correcting text. However, ToneGuard is designed specifically around the problem of tone misinterpretation in written communication.
+
+Its main difference is the integration of three communication-focused features in one application.
+
+| Feature | Purpose |
 |---|---|
-| Frontend | HTML, CSS, JavaScript |
-| Backend | Python, FastAPI |
-| AI Integration | Google Gemini API |
-| Data Validation | Pydantic |
-| API Testing | Swagger UI |
-| Environment Management | Python Virtual Environment |
+| Emotional Tone Detection | Identifies whether a message sounds harsh, neutral, friendly or professional. |
+| Grammar Correction | Detects and corrects selected grammatical errors. |
+| Professional Rewriting | Rephrases messages into clearer and more professional language. |
 
-## System Architecture
+### Key differences
 
-1. User enters text through the web dashboard.
-2. The frontend sends a request to the FastAPI backend.
-3. The backend processes the input using the relevant feature.
-4. Gemini AI is attempted for tone analysis and professional rewriting.
-5. Local rule-based processing is used if Gemini is unavailable.
-6. The processed result is returned to the frontend and displayed to the user.
+1. **Communication-focused design:** Specifically designed to improve the emotional and linguistic quality of written messages.
+2. **Tone awareness:** Identifies potentially harsh expressions that may affect how a message is interpreted.
+3. **Three integrated modules:** Combines tone detection, grammar correction and professional rewriting in one interface.
+4. **Practical everyday use:** Designed for real-world messages, emails and workplace communication.
+5. **AI with fallback mechanisms:** Uses Gemini AI for tone analysis and professional rewriting when available, with local rule-based fallback logic. Grammar correction uses rule-based language patterns.
 
-## Project Structure
+ToneGuard is not intended to replace general-purpose AI assistants. Instead, it provides a focused tool for improving everyday written communication.
 
-```text
-AITone-Misinterpretation/
-│
-├── android-app/
-│   └── index.html
-│
-├── backend/
-│   └── main.py
-│
-├── datasets/
-├── models/
-├── .gitignore
-└── README.md
-```
+## 4. Project Objectives
 
-## Installation and Execution
+- To identify emotional tone in written messages.
+- To detect potentially harsh or inappropriate expressions.
+- To correct common grammatical errors.
+- To rewrite messages in a polite and professional manner.
+- To reduce misunderstandings in digital communication.
+- To encourage effective and respectful communication.
 
-### 1. Clone the Repository
+## 5. Main Features
 
-```bash
-git clone https://github.com/aishwaryakumaran14/AITone-Misinterpretation.git
-cd AITone-Misinterpretation
-```
+### 5.1 Emotional Tone Detection
+Analyses the submitted message and identifies its emotional tone. It displays the detected tone, confidence score, potentially harsh expressions and recommendations.
 
-### 2. Create and Activate a Virtual Environment
+### 5.2 Grammar Correction
+Identifies selected grammatical errors and generates a corrected version of the submitted text.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+### 5.3 Professional Message Rewriting
+Transforms messages into clearer and more professional language while attempting to preserve the original meaning.
 
-### 3. Install Dependencies
+## 6. Technology Stack
 
-```bash
-pip install fastapi uvicorn python-dotenv google-genai
-```
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Python, FastAPI
+- **AI Integration:** Google Gemini API
+- **Grammar Processing:** Python regular expressions and rule-based corrections
+- **Deployment:** Render
+- **Development Environment:** Visual Studio Code
 
-### 4. Configure the Gemini API Key
+## 7. System Workflow
 
-Create a `.env` file in the project root:
+1. The user enters a text message.
+2. The frontend sends the message to the FastAPI backend.
+3. The backend processes the text using the selected feature.
+4. Gemini AI is used for supported AI-powered tasks when available.
+5. Local fallback logic is used when Gemini is unavailable.
+6. The processed result is returned to the frontend.
+7. The user views the analysis, correction or rewritten message.
 
-```env
-GEMINI_API_KEY=your_api_key_here
-```
+## 8. Benefits
 
-Replace the placeholder with your own Gemini API key. Never upload your `.env` file to GitHub.
+- Improves clarity in written communication.
+- Helps users recognise potentially harsh language.
+- Saves time when preparing professional messages.
+- Encourages polite and respectful communication.
+- Combines multiple text-improvement functions in one platform.
 
-### 5. Start the Backend
+## 9. Limitations
 
-```bash
-python -m uvicorn backend.main:app --reload --port 8000
-```
+- Tone interpretation may depend on context and can sometimes be inaccurate.
+- Grammar correction currently uses predefined language rules and does not identify every possible grammatical error.
+- AI-powered features depend on API availability and configuration.
+- The free hosting service may take additional time to respond after periods of inactivity.
 
-Backend API:
-http://127.0.0.1:8000
+## 10. Future Enhancements
 
-Swagger documentation:
-http://127.0.0.1:8000/docs
-
-### 6. Start the Frontend
-
-Open another terminal and run:
-
-```bash
-python3 -m http.server 5500
-```
-
-Open the dashboard:
-
-http://127.0.0.1:5500/android-app/
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/` | Backend status |
-| GET | `/health` | Health check |
-| POST | `/analyze` | Analyse message tone |
-| POST | `/grammar` | Correct grammar |
-| POST | `/rewrite` | Rewrite professionally |
-
-## Expected Applications
-
-- Professional email communication
-- Academic and workplace messaging
-- Improving clarity and politeness
-- Reducing misunderstandings in written communication
-
-## Future Enhancements
-
-- Advanced grammar correction using NLP.
 - Support for multiple languages.
-- Context-aware emotion and sentiment detection.
-- User authentication and communication history.
-- Downloadable analysis reports.
+- More advanced emotion and sentiment classification.
+- Context-aware grammar correction.
+- Integration with email and messaging platforms.
+- Personalised writing recommendations.
+- Support for additional communication styles and tones.
 
-## Project Information
+## 11. Conclusion
 
-**Project Name:** ToneGuard AI  
-**Project Domain:** Artificial Intelligence and Natural Language Processing  
-**Repository:** [AITone-Misinterpretation](https://github.com/aishwaryakumaran14/AITone-Misinterpretation)
+ToneGuard AI aims to make digital communication more effective by addressing an often-overlooked problem: the difference between what a person intends to communicate and how their message is interpreted by others.
 
----
+By combining emotional tone detection, grammar correction and professional rewriting, the application provides a practical solution for improving everyday written communication.
 
-*Developed as an academic project to promote clear, respectful, and effective digital communication.*
+**ToneGuard AI – Understand the signal behind the words.**
