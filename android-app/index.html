@@ -397,7 +397,9 @@ textarea::placeholder{color:#647168}
 </div>
 
 <script>
-const API = "http://127.0.0.1:8000";
+// Empty API base means requests use this same website's domain.
+// This is required for the single-URL Render deployment.
+const API = "";
 
 function getMessage() {
   return document.getElementById("message").value.trim();

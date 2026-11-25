@@ -2,19 +2,22 @@
 import os
 import json
 import re
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from google import genai
 
 
 # =====================================
-# GEMINI CONFIGURATION
+# PROJECT PATH AND GEMINI CONFIGURATION
 # =====================================
 
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key) if api_key else None
@@ -55,9 +58,8 @@ class TextRequest(BaseModel):
 
 @app.get("/")
 def home():
-    return {
-        "message": "AI Tone Misinterpretation Backend is running!"
-    }
+    dashboard_file = BASE_DIR / "android-app" / "index.html"
+    return FileResponse(dashboard_file)
 
 
 @app.get("/health")
@@ -174,7 +176,7 @@ Confidence must be between 0 and 1.
                 contents=prompt
             )
 
-            result_text = response.text.strip()
+            result_text = (response.text or "").strip()
             result_text = result_text.replace("```json", "")
             result_text = result_text.replace("```", "")
 
@@ -195,7 +197,7 @@ Confidence must be between 0 and 1.
 
 
 # =====================================
-# IMPROVED GRAMMAR CORRECTION
+# GRAMMAR CORRECTION
 # =====================================
 
 @app.post("/grammar")
@@ -211,34 +213,15 @@ def correct_grammar(request: TextRequest):
 
     corrected_text = text
 
-    # ---------------------------------
-    # Context-based past tense rules
-    # ---------------------------------
-
-    if re.search(r"\byesterday\b", corrected_text, re.IGNORECASE):
-
-        past_tense_rules = [
-            (r"\bhe go\b", "he went"),
-            (r"\bshe go\b", "she went"),
-            (r"\bit go\b", "it went"),
-            (r"\bi go\b", "I went"),
-            (r"\bthey go\b", "they went"),
-            (r"\bwe go\b", "we went"),
-            (r"\byou go\b", "you went"),
-        ]
-
-        for wrong, right in past_tense_rules:
-            corrected_text = re.sub(
-                wrong, right, corrected_text, flags=re.IGNORECASE
-            )
-
-    # ---------------------------------
-    # Subject and verb agreement
-    # ---------------------------------
-
     corrections = [
 
-        # Don't / Doesn't corrections
+        # Context-based past tense
+        (
+            r"\b(he|she|it|i|they|we|you)\s+go(?=\s+to\b[^.!?]*\byesterday\b)",
+            r"\1 went"
+        ),
+
+        # Subject and verb agreement
         (r"\bshe\s+don't\b", "she doesn't"),
         (r"\bhe\s+don't\b", "he doesn't"),
         (r"\bit\s+don't\b", "it doesn't"),
@@ -246,44 +229,45 @@ def correct_grammar(request: TextRequest):
         (r"\bshe\s+dont\b", "she doesn't"),
         (r"\bhe\s+dont\b", "he doesn't"),
         (r"\bit\s+dont\b", "it doesn't"),
-
         (r"\bi\s+dont\b", "I don't"),
         (r"\byou\s+dont\b", "you don't"),
         (r"\bthey\s+dont\b", "they don't"),
         (r"\bwe\s+dont\b", "we don't"),
 
-        # Have / Has corrections
-        (r"\bshe have\b", "she has"),
-        (r"\bhe have\b", "he has"),
-        (r"\bit have\b", "it has"),
-        (r"\bi has\b", "I have"),
+        (r"\bshe\s+have\b", "she has"),
+        (r"\bhe\s+have\b", "he has"),
+        (r"\bit\s+have\b", "it has"),
+        (r"\bi\s+has\b", "I have"),
 
-        # Is / Are corrections
-        (r"\bshe are\b", "she is"),
-        (r"\bhe are\b", "he is"),
-        (r"\bit are\b", "it is"),
-        (r"\bthey is\b", "they are"),
-        (r"\bwe is\b", "we are"),
-        (r"\byou is\b", "you are"),
+        (r"\bshe\s+are\b", "she is"),
+        (r"\bhe\s+are\b", "he is"),
+        (r"\bit\s+are\b", "it is"),
+        (r"\bthey\s+is\b", "they are"),
+        (r"\bwe\s+is\b", "we are"),
+        (r"\byou\s+is\b", "you are"),
 
-        # Was / Were corrections
-        (r"\bthey was\b", "they were"),
-        (r"\bwe was\b", "we were"),
-        (r"\byou was\b", "you were"),
+        (r"\bthey\s+was\b", "they were"),
+        (r"\bwe\s+was\b", "we were"),
+        (r"\byou\s+was\b", "you were"),
 
-        # Incorrect verbs after doesn't
-        (r"\bdoesn't likes\b", "doesn't like"),
-        (r"\bdoesn't goes\b", "doesn't go"),
-        (r"\bdoesn't plays\b", "doesn't play"),
-        (r"\bdoesn't works\b", "doesn't work"),
-        (r"\bdoesn't knows\b", "doesn't know"),
-        (r"\bdoesn't wants\b", "doesn't want"),
+        # Doesn't / don't verb agreement
+        (r"\bdoesn't\s+(likes|goes|plays|works|knows|wants)\b",
+         lambda m: "doesn't " + {
+             "likes": "like",
+             "goes": "go",
+             "plays": "play",
+             "works": "work",
+             "knows": "know",
+             "wants": "want"
+         }[m.group(1).lower()]),
 
-        # Incorrect verbs after don't
-        (r"\bdon't likes\b", "don't like"),
-        (r"\bdon't goes\b", "don't go"),
-        (r"\bdon't plays\b", "don't play"),
-        (r"\bdon't works\b", "don't work"),
+        (r"\bdon't\s+(likes|goes|plays|works)\b",
+         lambda m: "don't " + {
+             "likes": "like",
+             "goes": "go",
+             "plays": "play",
+             "works": "work"
+         }[m.group(1).lower()]),
 
         # Common contractions
         (r"\bdoesnt\b", "doesn't"),
@@ -306,9 +290,8 @@ def correct_grammar(request: TextRequest):
 
         # Articles
         (r"\bto office\b", "to the office"),
-        (r"\bto university\b", "to the university"),
 
-        # First-person pronoun capitalization
+        # First-person pronoun
         (r"\bi am\b", "I am"),
         (r"\bi have\b", "I have"),
         (r"\bi will\b", "I will"),
@@ -324,49 +307,20 @@ def correct_grammar(request: TextRequest):
             flags=re.IGNORECASE
         )
 
-    # ---------------------------------
-    # Third-person verb corrections
-    # ---------------------------------
-
-    verb_rules = [
-        (r"\bhe go\b", "he goes"),
-        (r"\bshe go\b", "she goes"),
-        (r"\bit go\b", "it goes"),
-
-        (r"\bhe like\b", "he likes"),
-        (r"\bshe like\b", "she likes"),
-
-        (r"\bhe work\b", "he works"),
-        (r"\bshe work\b", "she works"),
-
-        (r"\bhe play\b", "he plays"),
-        (r"\bshe play\b", "she plays"),
-    ]
-
-    for wrong, right in verb_rules:
-        corrected_text = re.sub(
-            wrong,
-            right,
-            corrected_text,
-            flags=re.IGNORECASE
-        )
-
-    # ---------------------------------
-    # Capitalization and punctuation
-    # ---------------------------------
-
+    # Capitalize the first character
     if corrected_text:
         corrected_text = (
             corrected_text[0].upper() + corrected_text[1:]
         )
 
+        # Add punctuation if missing
         if corrected_text[-1] not in ".!?":
             corrected_text += "."
 
     return {
         "original_text": text,
         "corrected_text": corrected_text,
-        "method": "Enhanced Rule-Based Grammar Correction"
+        "method": "Rule-Based Grammar Correction"
     }
 
 
