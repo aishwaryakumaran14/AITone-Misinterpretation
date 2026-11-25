@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Tone Misinterpretation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .result h3 {
+            color: #333;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Tone Misinterpretation</h1>
+
+        <p class="subtitle">
+            Analyze your text for grammar and potentially misinterpreted tone
+        </p>
+
+        <textarea
+            id="textInput"
+            placeholder="Enter your email or message here..."
+        ></textarea>
+
+        <button onclick="analyzeText()">
+            Analyze Text
+        </button>
+        <button onclick="correctGrammar()">
+    Correct Grammar
+</button>
+
+        <div class="result" id="result">
+            <h3>Result</h3>
+            <p>Your analysis will appear here.</p>
+        </div>
+
+    </div>
+
+    <script>
+        async function analyzeText() {
+
+            const text = document.getElementById("textInput").value;
+
+            if (!text.trim()) {
+                document.getElementById("result").innerHTML =
+                    "<p class='error'>Please enter some text.</p>";
+                return;
+            }
+
+            document.getElementById("result").innerHTML =
+                "<p>Analyzing...</p>";
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:8000/analyze",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            text: text
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                document.getElementById("result").innerHTML = `
+                    <h3>Analysis Result</h3>
+
+                    <p>
+                        <strong>Original Text:</strong><br>
+                        ${data.original_text}
+                    </p>
+
+                    <p>
+                        <strong>Detected Tone:</strong><br>
+                        ${data.detected_tone}
+                    </p>
+
+                    <p>
+                        <strong>Confidence:</strong><br>
+                        ${data.confidence}
+                    </p>
+
+                    <p>
+                        <strong>Detected Words:</strong><br>
+                        ${data.detected_words.join(", ") || "None"}
+                    </p>
+
+                    <p>
+                        <strong>Suggestion:</strong><br>
+                        ${data.suggestion}
+                    </p>
+                `;
+
+            } catch (error) {
+
+                document.getElementById("result").innerHTML = `
+                    <p class="error">
+                        Could not connect to the backend.
+                        Please make sure the FastAPI server is running.
+                    </p>
+                `;
+            }
+        }
+
+async function correctGrammar() {
+    const text = document.getElementById("textInput").value;
+
+    if (!text.trim()) {
+        document.getElementById("result").innerHTML =
+            "<p>Please enter some text first.</p>";
+        return;
+    }
+
+    const result = document.getElementById("result");
+    result.innerHTML = "<p>Correcting grammar...</p>";
+
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:8000/grammar",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: text })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Grammar correction failed");
+        }
+
+        const data = await response.json();
+
+        result.innerHTML = `
+            <h3>Grammar Correction Result</h3>
+            <p><strong>Original Text:</strong><br>
+            ${data.original_text}</p>
+
+            <p><strong>Corrected Text:</strong><br>
+            ${data.corrected_text}</p>
+        `;
+
+    } catch (error) {
+        result.innerHTML =
+            "<p class='error'>Could not connect to the backend.</p>";
+    }
+}
+
+    </script>
+
+</body>
+</html>
