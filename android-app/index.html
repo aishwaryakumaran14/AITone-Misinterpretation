@@ -4,903 +4,573 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToneGuard AI | Intelligent Communication</title>
-
+<title>TONEGUARD — Linguistic Intelligence Observatory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --bg: #080d1b;
-    --panel: #111a2d;
-    --panel2: #172239;
-    --border: rgba(255,255,255,.09);
-    --text: #f2f5ff;
-    --muted: #94a2bc;
-    --purple: #9675ff;
-    --blue: #5c91ff;
-    --green: #43d6b0;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-}
-
-button, textarea {
-    font: inherit;
-}
-
-.app {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar {
-    width: 245px;
-    background: #0d1425;
-    border-right: 1px solid var(--border);
-    padding: 28px 19px;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-}
-
-.brand {
-    font-family: 'Manrope', sans-serif;
-    font-size: 23px;
-    font-weight: 800;
-    letter-spacing: -.8px;
-    margin: 4px 0 42px 8px;
-}
-
-.brand span {
-    color: var(--purple);
-}
-
-.brand-icon {
-    display: inline-grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    margin-right: 8px;
-    border-radius: 11px;
-    background: linear-gradient(135deg,#9675ff,#518dff);
-    vertical-align: middle;
-}
-
-.nav-label {
-    color: #65738e;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    margin: 0 0 13px 10px;
-}
-
-.nav-item {
-    padding: 13px 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-radius: 10px;
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 7px;
-}
-
-.nav-item.active {
-    color: white;
-    background: linear-gradient(100deg,rgba(150,117,255,.2),rgba(92,145,255,.08));
-    border: 1px solid rgba(150,117,255,.2);
-}
-
-.nav-icon {
-    font-size: 17px;
-}
-
-.sidebar-bottom {
-    margin-top: auto;
-    background: #151e33;
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 15px;
-}
-
-.sidebar-bottom strong {
-    font-size: 12px;
-}
-
-.sidebar-bottom p {
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 1.6;
-    margin-top: 7px;
-}
-
-/* MAIN AREA */
-
-.main {
-    flex: 1;
-    min-width: 0;
-}
-
-.topbar {
-    height: 75px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5%;
-}
-
-.topbar-title {
-    color: #c5cee0;
-    font-size: 13px;
-}
-
-.top-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: #a8b5cc;
-    background: #142139;
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    padding: 9px 13px;
-}
-
-.dot {
-    width: 7px;
-    height: 7px;
-    background: var(--green);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--green);
-}
-
-.content {
-    max-width: 1120px;
-    margin: auto;
-    padding: 44px 5% 60px;
-}
-
-/* HERO */
-
-.eyebrow {
-    color: #a992ff;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-}
-
-.hero h1 {
-    font-family: 'Manrope', sans-serif;
-    font-size: clamp(29px,4vw,43px);
-    line-height: 1.2;
-    letter-spacing: -1.7px;
-    margin-bottom: 13px;
-}
-
-.gradient-text {
-    background: linear-gradient(90deg,#a98cff,#66a9ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.hero p {
-    max-width: 590px;
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-/* FEATURE CARDS */
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 15px;
-    margin: 32px 0;
-}
-
-.feature {
-    background: linear-gradient(145deg,#151f35,#111a2b);
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 18px;
-}
-
-.feature-icon {
-    font-size: 21px;
-    margin-bottom: 12px;
-}
-
-.feature strong {
-    font-size: 13px;
-    display: block;
-    margin-bottom: 6px;
-}
-
-.feature p {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.6;
-}
-
-/* EDITOR */
-
-.panel {
-    background: linear-gradient(145deg,#141e33,#10192a);
-    border: 1px solid var(--border);
-    border-radius: 17px;
-    padding: 25px;
-    margin-bottom: 22px;
-    box-shadow: 0 16px 45px rgba(0,0,0,.15);
-}
-
-.panel-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
-}
-
-.panel-heading h2 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 17px;
-}
-
-.panel-heading span {
-    color: #8e9cb6;
-    font-size: 11px;
-}
-
-textarea {
-    width: 100%;
-    min-height: 175px;
-    resize: vertical;
-    border: 1px solid #2a3852;
-    background: #0b1323;
-    border-radius: 12px;
-    color: white;
-    padding: 19px;
-    outline: none;
-    font-size: 14px;
-    line-height: 1.8;
-    transition: .2s;
-}
-
-textarea::placeholder {
-    color: #687792;
-}
-
-textarea:focus {
-    border-color: #9275ff;
-    box-shadow: 0 0 0 3px rgba(146,117,255,.1);
-}
-
-.editor-bottom {
-    display: flex;
-    justify-content: space-between;
-    color: #71809b;
-    font-size: 11px;
-    margin: 10px 2px 19px;
-}
-
-.actions {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 11px;
-}
-
-button {
-    border: 0;
-    cursor: pointer;
-    transition: .2s ease;
-}
-
-.action {
-    padding: 14px 10px;
-    border-radius: 10px;
-    color: white;
-    font-weight: 700;
-    font-size: 12px;
-    background: linear-gradient(110deg,#7655dc,#5785ed);
-}
-
-.action.grammar {
-    background: linear-gradient(110deg,#087f83,#25b99c);
-}
-
-.action.rewrite {
-    background: linear-gradient(110deg,#7551c9,#a16be9);
-}
-
-.action:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.12);
-}
-
-.action:disabled {
-    opacity: .55;
-    cursor: wait;
-    transform: none;
-}
-
-.clear-btn {
-    margin-top: 12px;
-    padding: 10px 14px;
-    color: #9eacc5;
-    background: #1a2941;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.status {
-    color: #91a1bd;
-    font-size: 12px;
-    margin-top: 17px;
-    min-height: 18px;
-}
-
-.status.error {
-    color: #ff9b9b;
-}
-
-.status.success {
-    color: #63dbb7;
-}
-
-/* RESULTS */
-
-.result {
-    display: none;
-    animation: appear .35s ease;
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.result-title {
-    font-family: 'Manrope', sans-serif;
-    font-size: 18px;
-    margin-bottom: 18px;
-}
-
-.result-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 13px;
-}
-
-.result-box {
-    background: #0c1527;
-    border: 1px solid #26344d;
-    border-radius: 12px;
-    padding: 18px;
-    min-width: 0;
-}
-
-.result-box.full {
-    grid-column: 1 / -1;
-}
-
-.result-box h3 {
-    color: #899ab6;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
-
-.result-box p {
-    color: #e2e9f7;
-    font-size: 14px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-}
-
-.tone {
-    font-family: 'Manrope',sans-serif;
-    font-size: 20px !important;
-    font-weight: 800;
-    color: #a991ff !important;
-}
-
-.meta {
-    color: #8d9cb6 !important;
-    font-size: 11px !important;
-    margin-top: 8px;
-}
-
-.progress {
-    height: 6px;
-    background: #25334a;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 14px;
-}
-
-.progress-fill {
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg,#8e6bff,#5b9aff);
-    border-radius: 10px;
-    transition: width .5s;
-}
-
-.copy-btn {
-    margin-top: 14px;
-    background: #263752;
-    color: #d9e4fa;
-    border: 1px solid #364963;
-    padding: 9px 13px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.copy-btn:hover {
-    background: #344a6b;
-}
-
-footer {
-    border-top: 1px solid var(--border);
-    text-align: center;
-    padding: 23px;
-    color: #667590;
-    font-size: 11px;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:850px) {
-    .sidebar {
-        width: 190px;
-    }
-}
-
-@media(max-width:650px) {
-    .sidebar {
-        display: none;
-    }
-
-    .content {
-        padding: 30px 17px;
-    }
-
-    .features {
-        grid-template-columns: 1fr;
-    }
-
-    .actions {
-        grid-template-columns: 1fr;
-    }
-
-    .result-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .result-box.full {
-        grid-column: auto;
-    }
-
-    .panel {
-        padding: 17px;
-    }
-
-    .topbar {
-        padding: 0 18px;
-    }
+  --bg:#101412;
+  --surface:#171d19;
+  --surface2:#1d2620;
+  --line:#354239;
+  --text:#e9eee7;
+  --muted:#89958b;
+  --lime:#d1f36a;
+  --mint:#83d6b2;
+  --orange:#e5a36b;
+  --red:#e68176;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+  --display:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
+button,textarea{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}
+.sidebar{
+  background:#141a16;border-right:1px solid var(--line);
+  min-height:100vh;padding:27px 18px;display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh
+}
+.brand{display:flex;align-items:center;gap:11px;margin:5px 4px 49px}
+.brand-mark{
+  width:38px;height:38px;border:1px solid var(--lime);
+  display:grid;place-items:center;color:var(--lime);
+  font-family:var(--mono);font-size:19px;position:relative
+}
+.brand-mark:after{content:"";position:absolute;width:5px;height:5px;background:var(--lime);right:-3px;top:-3px}
+.brand-name{font:700 17px var(--display);letter-spacing:-.7px}
+.brand-name span{color:var(--lime)}
+.micro{font:10px var(--mono);letter-spacing:1.4px;color:var(--muted)}
+.nav-heading{font:10px var(--mono);letter-spacing:1.7px;color:#68766c;margin:0 0 12px 9px}
+.nav-list{display:grid;gap:6px}
+.nav-item{
+  display:flex;align-items:center;gap:12px;padding:12px 11px;
+  border:1px solid transparent;color:#a4afa5;text-decoration:none;
+  font-size:12px;transition:.2s
+}
+.nav-item:hover,.nav-item.active{background:#202a22;border-color:#3d4b3c;color:var(--lime)}
+.nav-item .symbol{font:16px var(--mono);width:18px;text-align:center}
+.side-note{margin-top:auto;border-top:1px solid var(--line);padding:18px 5px 4px}
+.side-note .micro{margin-bottom:10px}
+.side-note p{font-size:11px;color:var(--muted);line-height:1.7}
+.side-note strong{color:var(--lime);font-weight:500}
+.main{min-width:0}
+.topbar{
+  height:65px;border-bottom:1px solid var(--line);padding:0 4.5%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(16,20,18,.88)
+}
+.crumb{font:11px var(--mono);color:var(--muted)}
+.crumb span{color:var(--lime)}
+.system-state{display:flex;align-items:center;gap:9px;font:10px var(--mono);letter-spacing:.6px;color:#a9b5aa}
+.state-light{width:7px;height:7px;background:var(--lime);border-radius:50%;box-shadow:0 0 12px #d1f36a88}
+.top-right{display:flex;align-items:center;gap:20px}
+.version{font:10px var(--mono);color:#69776c}
+.content{max-width:1280px;margin:auto;padding:38px 4.5% 60px}
+.hero{
+  display:grid;grid-template-columns:1fr 250px;gap:30px;
+  align-items:end;padding:22px 0 31px;border-bottom:1px solid var(--line)
+}
+.eyebrow{font:10px var(--mono);letter-spacing:2px;color:var(--lime);margin-bottom:17px}
+.hero h1{
+  font:600 clamp(34px,5vw,59px)/1.03 var(--display);
+  letter-spacing:-2.8px;max-width:700px
+}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero-copy{font-size:13px;line-height:1.8;color:#9ba69c;max-width:550px;margin-top:17px}
+.instrument{
+  border:1px solid var(--line);padding:15px;background:#151c17;
+  align-self:end
+}
+.instrument-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+.instrument-head span{font:9px var(--mono);letter-spacing:1px;color:var(--muted)}
+.instrument-head b{font:10px var(--mono);color:var(--lime);font-weight:400}
+.wave{height:53px;display:flex;align-items:center;justify-content:space-between;gap:3px}
+.wave i{display:block;width:4px;background:var(--lime);opacity:.78;border-radius:2px}
+.instrument-foot{display:flex;justify-content:space-between;margin-top:13px;font:9px var(--mono);color:#758177}
+.section-kicker{
+  display:flex;align-items:center;gap:12px;margin:29px 0 13px;
+  font:10px var(--mono);letter-spacing:1.6px;color:var(--muted)
+}
+.section-kicker:after{content:"";height:1px;background:var(--line);flex:1}
+.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.module{
+  background:var(--surface);border:1px solid var(--line);
+  padding:17px 18px;min-height:115px;position:relative;overflow:hidden
+}
+.module:after{content:"";position:absolute;width:55px;height:55px;border:1px solid #52604c44;right:-18px;bottom:-18px;transform:rotate(45deg)}
+.module-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.module-code{font:10px var(--mono);color:var(--lime)}
+.module-state{font:9px var(--mono);color:#87948a}
+.module h3{font:600 14px var(--display);margin-bottom:5px}
+.module p{font-size:11px;color:var(--muted);line-height:1.5}
+.workspace{margin-top:30px;border:1px solid var(--line);background:var(--surface)}
+.workspace-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:15px 19px;border-bottom:1px solid var(--line);gap:12px
+}
+.workspace-title{display:flex;align-items:center;gap:12px}
+.index{font:11px var(--mono);color:var(--lime)}
+.workspace-title h2{font:600 14px var(--display)}
+.workspace-head .micro{font-size:9px}
+.editor-wrap{padding:20px}
+.editor-label{display:flex;justify-content:space-between;margin-bottom:12px}
+.editor-label span{font:10px var(--mono);color:var(--muted)}
+textarea{
+  display:block;width:100%;min-height:185px;resize:vertical;
+  border:1px solid #39473c;background:#111713;color:var(--text);
+  padding:19px;font:14px/1.9 var(--sans);outline:none;
+  transition:border .2s
+}
+textarea:focus{border-color:var(--lime);box-shadow:0 0 0 2px #d1f36a14}
+textarea::placeholder{color:#647168}
+.editor-foot{display:flex;justify-content:space-between;margin-top:10px;gap:12px}
+.editor-foot span{font:10px var(--mono);color:#78857b}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:19px}
+.action{
+  min-height:49px;padding:12px 10px;border:1px solid var(--line);
+  background:#202a22;color:var(--text);font:600 11px var(--display);
+  transition:.2s;display:flex;justify-content:center;align-items:center;gap:9px
+}
+.action .action-symbol{font:16px var(--mono);color:var(--lime)}
+.action:hover{border-color:var(--lime);background:#293529;transform:translateY(-2px)}
+.action.grammar .action-symbol{color:var(--mint)}
+.action.rewrite .action-symbol{color:var(--orange)}
+.action:disabled{opacity:.5;cursor:wait;transform:none}
+.clear-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:12px}
+.clear-btn{border:0;background:transparent;color:#89958b;font:10px var(--mono);padding:7px 0}
+.clear-btn:hover{color:var(--lime)}
+.status{font:10px var(--mono);color:#9aa69b;min-height:16px}
+.status.error{color:var(--red)}
+.status.success{color:var(--lime)}
+.result{display:none;margin-top:18px;border:1px solid var(--line);background:var(--surface);animation:rise .3s ease}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.result-head{padding:16px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.result-head h2{font:600 14px var(--display)}
+.result-head span{font:9px var(--mono);color:var(--lime);letter-spacing:1px}
+.result-body{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.result-box{background:#111713;border:1px solid #354239;padding:17px;min-width:0}
+.result-box.full{grid-column:1/-1}
+.result-box h3{font:10px var(--mono);letter-spacing:1.2px;color:#8c998e;margin-bottom:13px}
+.result-box p{font-size:13px;line-height:1.8;color:#dce4da;white-space:pre-wrap;overflow-wrap:anywhere}
+.tone{font:600 24px var(--display)!important;color:var(--lime)!important}
+.meta{font:10px var(--mono)!important;color:#94a094!important;margin-top:8px}
+.progress{height:4px;background:#344035;margin-top:16px}
+.progress-fill{height:100%;width:0;background:var(--lime);transition:width .5s}
+.copy-btn{margin-top:15px;background:transparent;border:1px solid #52604f;padding:9px 12px;color:var(--lime);font:10px var(--mono)}
+.copy-btn:hover{background:#263226}
+.report-note{font:10px var(--mono);color:#758177;padding:0 18px 16px}
+.footer{
+  border-top:1px solid var(--line);margin-top:38px;padding-top:19px;
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  color:#68756b;font:9px var(--mono);letter-spacing:.6px
+}
+.footer span:last-child{color:var(--lime)}
+@media(max-width:900px){
+  .app{grid-template-columns:190px minmax(0,1fr)}
+  .hero{grid-template-columns:1fr}
+  .instrument{max-width:330px}
+}
+@media(max-width:650px){
+  .app{display:block}
+  .sidebar{position:relative;width:100%;height:auto;min-height:0;padding:15px 17px;border-right:0;border-bottom:1px solid var(--line)}
+  .brand{margin:0 0 13px}
+  .brand-mark{width:32px;height:32px}
+  .nav-heading,.side-note{display:none}
+  .nav-list{display:flex;overflow-x:auto}
+  .nav-item{white-space:nowrap;padding:9px}
+  .topbar{height:52px;padding:0 17px}
+  .content{padding:24px 16px 40px}
+  .hero h1{font-size:39px;letter-spacing:-1.8px}
+  .modules{grid-template-columns:1fr}
+  .module{min-height:90px}
+  .actions{grid-template-columns:1fr}
+  .result-body{grid-template-columns:1fr}
+  .result-box.full{grid-column:auto}
+  .workspace-head{align-items:flex-start;flex-direction:column}
+  .clear-row{align-items:flex-start;flex-direction:column}
+  .version{display:none}
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
 <aside class="sidebar">
-    <div class="brand">
-        <span class="brand-icon">✦</span>ToneGuard <span>AI</span>
-    </div>
+  <div class="brand">
+    <div class="brand-mark">T<span style="font-size:10px">/</span></div>
+    <div class="brand-name">TONE<span>GUARD</span></div>
+  </div>
 
-    <div class="nav-label">WORKSPACE</div>
+  <div class="nav-heading">OBSERVATORY / 01</div>
+  <nav class="nav-list">
+    <a class="nav-item active" href="#overview"><span class="symbol">⌁</span> Overview</a>
+    <a class="nav-item" href="#workspace"><span class="symbol">◉</span> Tone analysis</a>
+    <a class="nav-item" href="#workspace"><span class="symbol">⌗</span> Grammar lab</a>
+    <a class="nav-item" href="#workspace"><span class="symbol">↗</span> Rewrite engine</a>
+  </nav>
 
-    <div class="nav-item active">
-        <span class="nav-icon">⌂</span> Dashboard
-    </div>
-
-    <div class="nav-item">
-        <span class="nav-icon">◈</span> Tone Analysis
-    </div>
-
-    <div class="nav-item">
-        <span class="nav-icon">✎</span> Grammar Assistant
-    </div>
-
-    <div class="nav-item">
-        <span class="nav-icon">✧</span> Professional Rewrite
-    </div>
-
-    <div class="sidebar-bottom">
-        <strong>✦ Intelligent Communication</strong>
-        <p>Write clearly. Communicate confidently. Make every message count.</p>
-    </div>
+  <div class="side-note">
+    <div class="micro">RESEARCH PRINCIPLE</div>
+    <p>Language carries more than meaning. <strong>We study the signal behind the words.</strong></p>
+  </div>
 </aside>
 
 <main class="main">
-
-    <header class="topbar">
-        <div class="topbar-title">Workspace / Dashboard</div>
-        <div class="top-status">
-            <span class="dot"></span>
-            Backend interface
-        </div>
-    </header>
-
-    <div class="content">
-
-        <section class="hero">
-            <div class="eyebrow">✦ AI COMMUNICATION PLATFORM</div>
-            <h1>Communicate with <span class="gradient-text">clarity & confidence.</span></h1>
-            <p>
-                Your intelligent writing assistant. Analyse emotional tone,
-                improve grammar and transform everyday messages into
-                professional communication.
-            </p>
-        </section>
-
-        <section class="features">
-            <div class="feature">
-                <div class="feature-icon">◈</div>
-                <strong>Tone Intelligence</strong>
-                <p>Identify emotional tone and potentially harsh expressions.</p>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">✎</div>
-                <strong>Grammar Assistant</strong>
-                <p>Improve sentence structure and basic grammatical errors.</p>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">✧</div>
-                <strong>Professional Rewrite</strong>
-                <p>Transform messages into more polite professional language.</p>
-            </div>
-        </section>
-
-        <section class="panel">
-            <div class="panel-heading">
-                <h2>✦ Message Workspace</h2>
-                <span>AI Writing Assistant</span>
-            </div>
-
-            <textarea
-                id="message"
-                maxlength="5000"
-                placeholder="Start typing your message here...&#10;&#10;Example: Send me the report immediately. I am tired of asking you again."
-                oninput="updateCount()"
-            ></textarea>
-
-            <div class="editor-bottom">
-                <span>Enter your message to begin analysis</span>
-                <span id="charCount">0 / 5000</span>
-            </div>
-
-            <div class="actions">
-                <button class="action" id="analyzeBtn" onclick="analyzeTone()">
-                    ◈ &nbsp; Analyse Tone
-                </button>
-
-                <button class="action grammar" id="grammarBtn" onclick="correctGrammar()">
-                    ✎ &nbsp; Correct Grammar
-                </button>
-
-                <button class="action rewrite" id="rewriteBtn" onclick="rewriteMessage()">
-                    ✧ &nbsp; Rewrite Professionally
-                </button>
-            </div>
-
-            <button class="clear-btn" onclick="clearAll()">↺ &nbsp; Clear Workspace</button>
-
-            <p id="status" class="status">Ready to process your message.</p>
-        </section>
-
-        <section class="panel result" id="analysisResult">
-            <h2 class="result-title">◈ Tone Analysis Report</h2>
-
-            <div class="result-grid">
-                <div class="result-box">
-                    <h3>Detected Tone</h3>
-                    <p id="detectedTone" class="tone"></p>
-                    <p id="confidence" class="meta"></p>
-                    <div class="progress">
-                        <div class="progress-fill" id="confidenceBar"></div>
-                    </div>
-                </div>
-
-                <div class="result-box">
-                    <h3>Potentially Harsh Words</h3>
-                    <p id="detectedWords"></p>
-                </div>
-
-                <div class="result-box full">
-                    <h3>AI Recommendation</h3>
-                    <p id="suggestion"></p>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel result" id="grammarResult">
-            <h2 class="result-title">✎ Grammar Correction Report</h2>
-
-            <div class="result-box">
-                <h3>Corrected Message</h3>
-                <p id="correctedText"></p>
-                <button class="copy-btn" onclick="copyText('correctedText')">
-                    Copy corrected message ↗
-                </button>
-            </div>
-        </section>
-
-        <section class="panel result" id="rewriteResult">
-            <h2 class="result-title">✧ Professional Rewrite Report</h2>
-
-            <div class="result-box">
-                <h3>Rewritten Message</h3>
-                <p id="rewrittenText"></p>
-                <p id="rewriteMethod" class="meta"></p>
-                <button class="copy-btn" onclick="copyText('rewrittenText')">
-                    Copy professional message ↗
-                </button>
-            </div>
-        </section>
-
+  <header class="topbar">
+    <div class="crumb">TONEGUARD <span>/</span> LINGUISTIC OBSERVATORY</div>
+    <div class="top-right">
+      <span class="version">SYSTEM VERSION 1.0.0</span>
+      <div class="system-state"><i class="state-light"></i> INTERFACE READY</div>
     </div>
+  </header>
 
-    <footer>
-        ToneGuard AI · Intelligent Tone Analysis & Professional Communication
+  <div class="content" id="overview">
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">LINGUISTIC INTELLIGENCE / RESEARCH UNIT 001</div>
+        <h1>Every message<br>has a <em>signal.</em></h1>
+        <p class="hero-copy">
+          ToneGuard examines the emotional signals hidden in written communication.
+          Detect tone, identify grammatical errors and transform messages into
+          clearer professional language.
+        </p>
+      </div>
+
+      <div class="instrument">
+        <div class="instrument-head">
+          <span>LANGUAGE SIGNAL</span>
+          <b>● LIVE</b>
+        </div>
+        <div class="wave" aria-label="Decorative signal visualisation">
+          <i style="height:13px"></i><i style="height:25px"></i>
+          <i style="height:17px"></i><i style="height:37px"></i>
+          <i style="height:27px"></i><i style="height:48px"></i>
+          <i style="height:32px"></i><i style="height:20px"></i>
+          <i style="height:42px"></i><i style="height:28px"></i>
+          <i style="height:49px"></i><i style="height:19px"></i>
+          <i style="height:34px"></i><i style="height:24px"></i>
+          <i style="height:43px"></i><i style="height:14px"></i>
+          <i style="height:30px"></i><i style="height:40px"></i>
+          <i style="height:18px"></i><i style="height:32px"></i>
+        </div>
+        <div class="instrument-foot">
+          <span>INPUT / TEXT</span><span>MODE / ANALYSIS</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-kicker">01 / INTELLIGENCE MODULES</div>
+    <section class="modules">
+      <article class="module">
+        <div class="module-top"><span class="module-code">MOD. 01</span><span class="module-state">TONE ENGINE</span></div>
+        <h3>Emotional Signal Detection</h3>
+        <p>Examine the emotional character and potentially harsh expressions in text.</p>
+      </article>
+      <article class="module">
+        <div class="module-top"><span class="module-code">MOD. 02</span><span class="module-state">LANGUAGE ENGINE</span></div>
+        <h3>Grammar Diagnostics</h3>
+        <p>Identify and correct grammatical issues for clearer communication.</p>
+      </article>
+      <article class="module">
+        <div class="module-top"><span class="module-code">MOD. 03</span><span class="module-state">REWRITE ENGINE</span></div>
+        <h3>Professional Reframing</h3>
+        <p>Reframe everyday messages into more polished professional language.</p>
+      </article>
+    </section>
+
+    <section class="workspace" id="workspace">
+      <div class="workspace-head">
+        <div class="workspace-title">
+          <span class="index">02 /</span>
+          <h2>Communication analysis chamber</h2>
+        </div>
+        <span class="micro">INPUT TERMINAL · TEXT MODE</span>
+      </div>
+
+      <div class="editor-wrap">
+        <div class="editor-label">
+          <span>01 — SOURCE MESSAGE</span>
+          <span>MAXIMUM 5,000 CHARACTERS</span>
+        </div>
+
+        <textarea
+          id="message"
+          maxlength="5000"
+          placeholder="Enter the message you want to examine...&#10;&#10;Example: Send me the report immediately. I am tired of asking you again."
+          oninput="updateCount()"
+        ></textarea>
+
+        <div class="editor-foot">
+          <span>Awaiting language input...</span>
+          <span id="charCount">0 / 5000</span>
+        </div>
+
+        <div class="actions">
+          <button class="action" id="analyzeBtn" onclick="analyzeTone()">
+            <span class="action-symbol">◉</span> Analyse tone
+          </button>
+          <button class="action grammar" id="grammarBtn" onclick="correctGrammar()">
+            <span class="action-symbol">⌗</span> Correct grammar
+          </button>
+          <button class="action rewrite" id="rewriteBtn" onclick="rewriteMessage()">
+            <span class="action-symbol">↗</span> Rewrite professionally
+          </button>
+        </div>
+
+        <div class="clear-row">
+          <button class="clear-btn" onclick="clearAll()">↺ &nbsp; RESET INPUT TERMINAL</button>
+          <p id="status" class="status">SYSTEM READY — AWAITING INPUT</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="result" id="analysisResult">
+      <div class="result-head">
+        <h2>◉ Emotional signal report</h2>
+        <span>ANALYSIS OUTPUT / 01</span>
+      </div>
+      <div class="result-body">
+        <div class="result-box">
+          <h3>DETECTED TONE</h3>
+          <p id="detectedTone" class="tone"></p>
+          <p id="confidence" class="meta"></p>
+          <div class="progress"><div class="progress-fill" id="confidenceBar"></div></div>
+        </div>
+        <div class="result-box">
+          <h3>POTENTIALLY HARSH EXPRESSIONS</h3>
+          <p id="detectedWords"></p>
+        </div>
+        <div class="result-box full">
+          <h3>LINGUISTIC RECOMMENDATION</h3>
+          <p id="suggestion"></p>
+        </div>
+      </div>
+      <div class="report-note">OUTPUT / GENERATED FROM THE SUBMITTED MESSAGE</div>
+    </section>
+
+    <section class="result" id="grammarResult">
+      <div class="result-head">
+        <h2>⌗ Grammar diagnostics</h2>
+        <span>LANGUAGE OUTPUT / 02</span>
+      </div>
+      <div class="result-body">
+        <div class="result-box full">
+          <h3>CORRECTED MESSAGE</h3>
+          <p id="correctedText"></p>
+          <button class="copy-btn" onclick="copyText('correctedText')">COPY CORRECTED TEXT ↗</button>
+        </div>
+      </div>
+      <div class="report-note">OUTPUT / GRAMMAR PROCESSING</div>
+    </section>
+
+    <section class="result" id="rewriteResult">
+      <div class="result-head">
+        <h2>↗ Professional reframing report</h2>
+        <span>REWRITE OUTPUT / 03</span>
+      </div>
+      <div class="result-body">
+        <div class="result-box full">
+          <h3>REFRAMED MESSAGE</h3>
+          <p id="rewrittenText"></p>
+          <p id="rewriteMethod" class="meta"></p>
+          <button class="copy-btn" onclick="copyText('rewrittenText')">COPY PROFESSIONAL TEXT ↗</button>
+        </div>
+      </div>
+      <div class="report-note">OUTPUT / PROFESSIONAL COMMUNICATION</div>
+    </section>
+
+    <footer class="footer">
+      <span>TONEGUARD · LINGUISTIC INTELLIGENCE SYSTEM</span>
+      <span>UNDERSTAND THE SIGNAL BEHIND THE WORDS.</span>
     </footer>
 
+  </div>
 </main>
 </div>
 
 <script>
-
 const API = "http://127.0.0.1:8000";
 
 function getMessage() {
-    return document.getElementById("message").value.trim();
+  return document.getElementById("message").value.trim();
 }
 
 function updateCount() {
-    const length = document.getElementById("message").value.length;
-    document.getElementById("charCount").textContent =
-        length + " / 5000";
+  const length = document.getElementById("message").value.length;
+  document.getElementById("charCount").textContent = length + " / 5000";
 }
 
 function setStatus(message, type = "") {
-    const status = document.getElementById("status");
-    status.textContent = message;
-    status.className = "status " + type;
+  const status = document.getElementById("status");
+  status.textContent = message;
+  status.className = "status " + type;
 }
 
 function showResult(id) {
-    const element = document.getElementById(id);
-    element.style.display = "block";
-    element.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  const element = document.getElementById(id);
+  element.style.display = "block";
+  element.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function hideResult(id) {
-    document.getElementById(id).style.display = "none";
+  document.getElementById(id).style.display = "none";
 }
 
 async function sendRequest(endpoint, text) {
+  const response = await fetch(API + endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: text })
+  });
 
-    const response = await fetch(API + endpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ text: text })
-    });
+  if (!response.ok) {
+    throw new Error("Server error: " + response.status);
+  }
 
-    if (!response.ok) {
-        throw new Error("Server error: " + response.status);
-    }
-
-    return await response.json();
+  return await response.json();
 }
 
 async function analyzeTone() {
+  const text = getMessage();
 
-    const text = getMessage();
+  if (!text) {
+    setStatus("Please enter a message first.", "error");
+    return;
+  }
 
-    if (!text) {
-        setStatus("Please enter a message first.", "error");
-        return;
-    }
+  const button = document.getElementById("analyzeBtn");
+  button.disabled = true;
+  button.innerHTML = '<span class="action-symbol">◉</span> Analysing...';
+  setStatus("EXAMINING EMOTIONAL SIGNAL...");
 
-    const button = document.getElementById("analyzeBtn");
-    button.disabled = true;
-    button.textContent = "Analysing...";
+  try {
+    const data = await sendRequest("/analyze", text);
 
-    setStatus("Analysing emotional tone...");
+    document.getElementById("detectedTone").textContent =
+      data.detected_tone || "Not available";
 
-    try {
+    const confidence = Number(data.confidence || 0) * 100;
 
-        const data = await sendRequest("/analyze", text);
+    document.getElementById("confidence").textContent =
+      "Confidence score: " + confidence.toFixed(0) + "%";
 
-        document.getElementById("detectedTone").textContent =
-            data.detected_tone || "Not available";
+    document.getElementById("confidenceBar").style.width =
+      Math.min(100, Math.max(0, confidence)) + "%";
 
-        const confidence = Number(data.confidence || 0) * 100;
+    document.getElementById("detectedWords").textContent =
+      data.detected_words && data.detected_words.length
+        ? data.detected_words.join(", ")
+        : "No potentially harsh words detected.";
 
-        document.getElementById("confidence").textContent =
-            "Confidence score: " + confidence.toFixed(0) + "%";
+    document.getElementById("suggestion").textContent =
+      data.suggestion || "No recommendation available.";
 
-        document.getElementById("confidenceBar").style.width =
-            Math.min(100, Math.max(0, confidence)) + "%";
+    showResult("analysisResult");
+    setStatus("TONE ANALYSIS COMPLETED.", "success");
 
-        document.getElementById("detectedWords").textContent =
-            data.detected_words && data.detected_words.length
-                ? data.detected_words.join(", ")
-                : "No potentially harsh words detected.";
-
-        document.getElementById("suggestion").textContent =
-            data.suggestion || "No recommendation available.";
-
-        showResult("analysisResult");
-        setStatus("Tone analysis completed successfully.", "success");
-
-    } catch (error) {
-
-        console.error(error);
-        setStatus("Unable to analyse. Check that the backend is running.", "error");
-
-    } finally {
-
-        button.disabled = false;
-        button.innerHTML = "◈ &nbsp; Analyse Tone";
-    }
+  } catch (error) {
+    console.error(error);
+    setStatus("Unable to analyse. Check that the backend is running.", "error");
+  } finally {
+    button.disabled = false;
+    button.innerHTML = '<span class="action-symbol">◉</span> Analyse tone';
+  }
 }
 
 async function correctGrammar() {
+  const text = getMessage();
 
-    const text = getMessage();
+  if (!text) {
+    setStatus("Please enter a message first.", "error");
+    return;
+  }
 
-    if (!text) {
-        setStatus("Please enter a message first.", "error");
-        return;
-    }
+  const button = document.getElementById("grammarBtn");
+  button.disabled = true;
+  button.innerHTML = '<span class="action-symbol">⌗</span> Correcting...';
+  setStatus("RUNNING GRAMMAR DIAGNOSTICS...");
 
-    const button = document.getElementById("grammarBtn");
-    button.disabled = true;
-    button.textContent = "Correcting...";
+  try {
+    const data = await sendRequest("/grammar", text);
 
-    setStatus("Correcting grammatical errors...");
+    document.getElementById("correctedText").textContent =
+      data.corrected_text || "";
 
-    try {
+    showResult("grammarResult");
+    setStatus("GRAMMAR CORRECTION COMPLETED.", "success");
 
-        const data = await sendRequest("/grammar", text);
-
-        document.getElementById("correctedText").textContent =
-            data.corrected_text || "";
-
-        showResult("grammarResult");
-        setStatus("Grammar correction completed successfully.", "success");
-
-    } catch (error) {
-
-        console.error(error);
-        setStatus("Grammar correction failed. Check the backend.", "error");
-
-    } finally {
-
-        button.disabled = false;
-        button.innerHTML = "✎ &nbsp; Correct Grammar";
-    }
+  } catch (error) {
+    console.error(error);
+    setStatus("Grammar correction failed. Check the backend.", "error");
+  } finally {
+    button.disabled = false;
+    button.innerHTML = '<span class="action-symbol">⌗</span> Correct grammar';
+  }
 }
 
 async function rewriteMessage() {
+  const text = getMessage();
 
-    const text = getMessage();
+  if (!text) {
+    setStatus("Please enter a message first.", "error");
+    return;
+  }
 
-    if (!text) {
-        setStatus("Please enter a message first.", "error");
-        return;
-    }
+  const button = document.getElementById("rewriteBtn");
+  button.disabled = true;
+  button.innerHTML = '<span class="action-symbol">↗</span> Rewriting...';
+  setStatus("PREPARING PROFESSIONAL REFRAMING...");
 
-    const button = document.getElementById("rewriteBtn");
-    button.disabled = true;
-    button.textContent = "Rewriting...";
+  try {
+    const data = await sendRequest("/rewrite", text);
 
-    setStatus("Preparing professional rewrite...");
+    document.getElementById("rewrittenText").textContent =
+      data.rewritten_text || "No rewritten message returned.";
 
-    try {
+    document.getElementById("rewriteMethod").textContent =
+      "Processing method: " + (data.method || "Unknown");
 
-        const data = await sendRequest("/rewrite", text);
+    showResult("rewriteResult");
+    setStatus("PROFESSIONAL REWRITE COMPLETED.", "success");
 
-        document.getElementById("rewrittenText").textContent =
-            data.rewritten_text || "No rewritten message returned.";
-
-        document.getElementById("rewriteMethod").textContent =
-            "Processing method: " + (data.method || "Unknown");
-
-        showResult("rewriteResult");
-
-        setStatus(
-            "Professional rewrite completed successfully.",
-            "success"
-        );
-
-    } catch (error) {
-
-        console.error(error);
-        setStatus("Rewriting failed. Check the backend.", "error");
-
-    } finally {
-
-        button.disabled = false;
-        button.innerHTML = "✧ &nbsp; Rewrite Professionally";
-    }
+  } catch (error) {
+    console.error(error);
+    setStatus("Rewriting failed. Check the backend.", "error");
+  } finally {
+    button.disabled = false;
+    button.innerHTML = '<span class="action-symbol">↗</span> Rewrite professionally';
+  }
 }
 
 async function copyText(elementId) {
+  const text = document.getElementById(elementId).textContent;
 
-    const text = document.getElementById(elementId).textContent;
-
-    try {
-
-        await navigator.clipboard.writeText(text);
-        setStatus("Message copied successfully!", "success");
-
-    } catch (error) {
-
-        setStatus("Copy unavailable in this browser.", "error");
-    }
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus("TEXT COPIED TO CLIPBOARD.", "success");
+  } catch (error) {
+    setStatus("Copy unavailable in this browser.", "error");
+  }
 }
 
 function clearAll() {
+  document.getElementById("message").value = "";
 
-    document.getElementById("message").value = "";
+  hideResult("analysisResult");
+  hideResult("grammarResult");
+  hideResult("rewriteResult");
 
-    hideResult("analysisResult");
-    hideResult("grammarResult");
-    hideResult("rewriteResult");
-
-    updateCount();
-    setStatus("Workspace cleared. Ready for a new message.", "success");
+  updateCount();
+  setStatus("INPUT TERMINAL RESET — READY FOR NEW MESSAGE.", "success");
 }
-
 </script>
-
 </body>
 </html>

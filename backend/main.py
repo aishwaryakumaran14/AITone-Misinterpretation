@@ -211,21 +211,54 @@ def correct_grammar(request: TextRequest):
 
     corrected_text = text
 
-    corrections = [
-        # Subject and verb agreement
-        (r"\bshe dont\b", "she doesn't"),
-        (r"\bhe dont\b", "he doesn't"),
-        (r"\bit dont\b", "it doesn't"),
-        (r"\bi dont\b", "I don't"),
-        (r"\byou dont\b", "you don't"),
-        (r"\bthey dont\b", "they don't"),
-        (r"\bwe dont\b", "we don't"),
+    # ---------------------------------
+    # Context-based past tense rules
+    # ---------------------------------
 
+    if re.search(r"\byesterday\b", corrected_text, re.IGNORECASE):
+
+        past_tense_rules = [
+            (r"\bhe go\b", "he went"),
+            (r"\bshe go\b", "she went"),
+            (r"\bit go\b", "it went"),
+            (r"\bi go\b", "I went"),
+            (r"\bthey go\b", "they went"),
+            (r"\bwe go\b", "we went"),
+            (r"\byou go\b", "you went"),
+        ]
+
+        for wrong, right in past_tense_rules:
+            corrected_text = re.sub(
+                wrong, right, corrected_text, flags=re.IGNORECASE
+            )
+
+    # ---------------------------------
+    # Subject and verb agreement
+    # ---------------------------------
+
+    corrections = [
+
+        # Don't / Doesn't corrections
+        (r"\bshe\s+don't\b", "she doesn't"),
+        (r"\bhe\s+don't\b", "he doesn't"),
+        (r"\bit\s+don't\b", "it doesn't"),
+
+        (r"\bshe\s+dont\b", "she doesn't"),
+        (r"\bhe\s+dont\b", "he doesn't"),
+        (r"\bit\s+dont\b", "it doesn't"),
+
+        (r"\bi\s+dont\b", "I don't"),
+        (r"\byou\s+dont\b", "you don't"),
+        (r"\bthey\s+dont\b", "they don't"),
+        (r"\bwe\s+dont\b", "we don't"),
+
+        # Have / Has corrections
         (r"\bshe have\b", "she has"),
         (r"\bhe have\b", "he has"),
         (r"\bit have\b", "it has"),
         (r"\bi has\b", "I have"),
 
+        # Is / Are corrections
         (r"\bshe are\b", "she is"),
         (r"\bhe are\b", "he is"),
         (r"\bit are\b", "it is"),
@@ -233,9 +266,24 @@ def correct_grammar(request: TextRequest):
         (r"\bwe is\b", "we are"),
         (r"\byou is\b", "you are"),
 
+        # Was / Were corrections
         (r"\bthey was\b", "they were"),
         (r"\bwe was\b", "we were"),
         (r"\byou was\b", "you were"),
+
+        # Incorrect verbs after doesn't
+        (r"\bdoesn't likes\b", "doesn't like"),
+        (r"\bdoesn't goes\b", "doesn't go"),
+        (r"\bdoesn't plays\b", "doesn't play"),
+        (r"\bdoesn't works\b", "doesn't work"),
+        (r"\bdoesn't knows\b", "doesn't know"),
+        (r"\bdoesn't wants\b", "doesn't want"),
+
+        # Incorrect verbs after don't
+        (r"\bdon't likes\b", "don't like"),
+        (r"\bdon't goes\b", "don't go"),
+        (r"\bdon't plays\b", "don't play"),
+        (r"\bdon't works\b", "don't work"),
 
         # Common contractions
         (r"\bdoesnt\b", "doesn't"),
@@ -250,13 +298,17 @@ def correct_grammar(request: TextRequest):
         (r"\bwasnt\b", "wasn't"),
         (r"\bwerent\b", "weren't"),
 
-        # Sentence-specific corrections
+        # Common sentence corrections
         (r"\bthe meeting are\b", "the meeting is"),
         (r"\bmeeting are\b", "meeting is"),
         (r"\bis postpone\b", "is postponed"),
         (r"\bare postpone\b", "are postponed"),
 
-        # Capitalization of first-person pronoun
+        # Articles
+        (r"\bto office\b", "to the office"),
+        (r"\bto university\b", "to the university"),
+
+        # First-person pronoun capitalization
         (r"\bi am\b", "I am"),
         (r"\bi have\b", "I have"),
         (r"\bi will\b", "I will"),
@@ -272,20 +324,49 @@ def correct_grammar(request: TextRequest):
             flags=re.IGNORECASE
         )
 
-    # Capitalize the first character
+    # ---------------------------------
+    # Third-person verb corrections
+    # ---------------------------------
+
+    verb_rules = [
+        (r"\bhe go\b", "he goes"),
+        (r"\bshe go\b", "she goes"),
+        (r"\bit go\b", "it goes"),
+
+        (r"\bhe like\b", "he likes"),
+        (r"\bshe like\b", "she likes"),
+
+        (r"\bhe work\b", "he works"),
+        (r"\bshe work\b", "she works"),
+
+        (r"\bhe play\b", "he plays"),
+        (r"\bshe play\b", "she plays"),
+    ]
+
+    for wrong, right in verb_rules:
+        corrected_text = re.sub(
+            wrong,
+            right,
+            corrected_text,
+            flags=re.IGNORECASE
+        )
+
+    # ---------------------------------
+    # Capitalization and punctuation
+    # ---------------------------------
+
     if corrected_text:
         corrected_text = (
             corrected_text[0].upper() + corrected_text[1:]
         )
 
-        # Add punctuation if missing
         if corrected_text[-1] not in ".!?":
             corrected_text += "."
 
     return {
         "original_text": text,
         "corrected_text": corrected_text,
-        "method": "Rule-Based Grammar Correction"
+        "method": "Enhanced Rule-Based Grammar Correction"
     }
 
 
