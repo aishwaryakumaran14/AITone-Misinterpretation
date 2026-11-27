@@ -471,20 +471,12 @@ Do not always return the same confidence. Evaluate each message independently.
             "method": "Gemini AI contextual analysis"
         }
 
+    
     except Exception as e:
-        print("GEMINI ANALYSIS ERROR:", repr(e))
-        return {
-            "original_text": text,
-            "detected_tone": "Analysis Error",
-            "secondary_tones": [],
-            "confidence": 0.0,
-            "confidence_level": "Low",
-            "detected_words": [],
-            "explanation": f"Gemini analysis failed: {str(e)}",
-            "suggestion": "Check your Gemini API configuration and terminal error.",
-            "is_mixed_tone": False,
-            "method": "Gemini API Error"
-        }
+      print("GEMINI ANALYSIS ERROR:", repr(e))
+      print("Switching to local tone analysis...")
+      return local_tone_analysis(text)
+
 
 
 # ============================================================
