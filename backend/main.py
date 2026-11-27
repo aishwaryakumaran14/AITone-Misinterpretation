@@ -190,13 +190,18 @@ def health():
 
 TONE_PATTERNS = {
     "Aggressive": [
-        r"\bshut up\b",
-        r"\bdo it now\b",
-        r"\bwhat is wrong with you\b",
-        r"\byou are useless\b",
-        r"\bstop making excuses\b",
-        r"\bi don't care\b"
-    ],
+    r"\bshut up\b",
+    r"\bdo it now\b",
+    r"\bwhat is wrong with you\b",
+    r"\byou are useless\b",
+    r"\bstop making excuses\b",
+    r"\bi don't care\b",
+    r"\bstop wasting my time\b",
+    r"\bfinish .* immediately\b",
+    r"\bdo this immediately\b",
+    r"\bget it done now\b",
+    r"\bi am not going to tolerate\b"
+],
     "Harsh": [
         r"\byou never\b",
         r"\byou always\b",
@@ -235,13 +240,16 @@ TONE_PATTERNS = {
         r"\blooking forward to\b"
     ],
     "Polite": [
-        r"\bcould you please\b",
-        r"\bwould you please\b",
-        r"\bwould you mind\b",
-        r"\bthank you\b",
-        r"\bkindly\b",
-        r"\bplease let me know\b"
-    ],
+    r"\bcould you please\b",
+    r"\bwould you please\b",
+    r"\bwould you mind\b",
+    r"\bthank you\b",
+    r"\bkindly\b",
+    r"\bplease let me know\b",
+    r"\bplease send\b",
+    r"\bi appreciate your help\b",
+    r"\bthank you so much\b"
+],
     "Persuasive": [
         r"\bi recommend\b",
         r"\bwe should consider\b",
